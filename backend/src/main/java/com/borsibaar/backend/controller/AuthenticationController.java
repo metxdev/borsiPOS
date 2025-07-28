@@ -49,4 +49,5 @@ public class AuthenticationController {
         private String token;
         private long expiresIn;
     }
+
 }
