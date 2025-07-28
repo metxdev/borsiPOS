@@ -1,0 +1,28 @@
+# === Backend (Java / Maven) ===
+*.class
+*.jar
+*.war
+*.ear
+target/
+*.iml
+*.log
+
+# IntelliJ / JetBrains
+.idea/
+*.iws
+*.ipr
+
+# === Frontend (Node, React, etc.) ===
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env.local
+
+# === Environment / Secrets ===
+.env
+.env.*
+!.env.example
+
+# === System files ===
+.DS_Store
+Thumbs.db
