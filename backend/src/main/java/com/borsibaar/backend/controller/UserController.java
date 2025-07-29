@@ -1,6 +1,7 @@
 package com.borsibaar.backend.controller;
 
 import com.borsibaar.backend.configs.SecurityConfiguration;
+import com.borsibaar.backend.dtos.UserDto;
 import com.borsibaar.backend.entity.User;
 import com.borsibaar.backend.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,21 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<User> authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public ResponseEntity<UserDto> authenticatedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
 
-        User currentUser = (User) authentication.getPrincipal();
+        UserDto dto = UserDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .role(user.getRole())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
 
-        return ResponseEntity.ok(currentUser);
+        return ResponseEntity.ok(dto);
     }
-    
 
     @GetMapping()
     public ResponseEntity<List<User>> allUsers() {

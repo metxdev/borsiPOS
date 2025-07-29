@@ -4,12 +4,15 @@ import com.borsibaar.backend.entity.Role;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Date;
+
 @Getter
 @Builder
-public class RegisterUserDto {
-    private String email;
-    private String password;
+public class UserDto {
+    private Integer id;
     private String fullName;
+    private String email;
     private Role role;
+    private Date createdAt;
+    private Date updatedAt;
 }
-

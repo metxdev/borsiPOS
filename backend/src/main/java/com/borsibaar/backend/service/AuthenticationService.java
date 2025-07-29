@@ -2,6 +2,7 @@ package com.borsibaar.backend.service;
 
 import com.borsibaar.backend.dtos.LoginUserDto;
 import com.borsibaar.backend.dtos.RegisterUserDto;
+import com.borsibaar.backend.entity.Role;
 import com.borsibaar.backend.entity.User;
 import com.borsibaar.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class AuthenticationService {
                 .fullName(input.getFullName())
                 .email(input.getEmail())
                 .password(passwordEncoder.encode(input.getPassword()))
+                .role(input.getRole() == null ? Role.SALES : input.getRole())
                 .build();
 
         return userRepository.save(user);

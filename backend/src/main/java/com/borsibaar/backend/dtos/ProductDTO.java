@@ -19,4 +19,6 @@ public class ProductDTO {
     private Long categoryId;
     private String categoryName;
     private LocalDateTime lastSaleAt;
+    private BigDecimal priceChange;
+    private Boolean    priceUp;
 }
