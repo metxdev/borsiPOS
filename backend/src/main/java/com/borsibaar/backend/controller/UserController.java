@@ -1,6 +1,5 @@
 package com.borsibaar.backend.controller;
 
-import com.borsibaar.backend.configs.SecurityConfiguration;
 import com.borsibaar.backend.dtos.UserDto;
 import com.borsibaar.backend.entity.User;
 import com.borsibaar.backend.service.UserService;
@@ -42,7 +41,6 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<List<User>> allUsers() {
         List <User> users = userService.allUsers();
-
         return ResponseEntity.ok(users);
     }
 

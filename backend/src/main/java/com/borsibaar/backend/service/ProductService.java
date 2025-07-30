@@ -6,10 +6,10 @@ import com.borsibaar.backend.dtos.ProductDTO;
 import com.borsibaar.backend.dtos.UpdateProductDto;
 import com.borsibaar.backend.entity.Category;
 import com.borsibaar.backend.entity.Product;
+import com.borsibaar.backend.exceptions.ProductNotFoundException;
 import com.borsibaar.backend.repository.CategoryRepository;
 import com.borsibaar.backend.repository.PriceHistoryRepository;
 import com.borsibaar.backend.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +52,6 @@ public class ProductService {
                     .categoryName(product.getCategoryName())
                     .lastSaleAt(product.getLastSaleAt());
 
-            // Optionally enrich with historical data
             priceHistoryRepository.findTopByProductIdOrderByChangedAtDesc(product.getId())
                     .ifPresent(hist -> {
                         builder.priceChange(hist.getNewPrice().subtract(hist.getOldPrice()));
@@ -104,7 +103,7 @@ public class ProductService {
     @Transactional
     public ProductDTO update(Long id, UpdateProductDto dto) {
         Product existing = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(""));
+                .orElseThrow(() -> new ProductNotFoundException(id));
 
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new ResponseStatusException(
