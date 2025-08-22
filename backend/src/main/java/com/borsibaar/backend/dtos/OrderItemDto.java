@@ -7,7 +7,8 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
+@Data
 public class OrderItemDto {
-    private Long productId;
     private int quantity;
+    private ProductDTO product;
 }

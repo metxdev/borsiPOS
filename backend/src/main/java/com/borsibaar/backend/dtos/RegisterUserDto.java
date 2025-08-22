@@ -1,15 +1,25 @@
 package com.borsibaar.backend.dtos;
 
-import com.borsibaar.backend.entity.Role;
-import lombok.Builder;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@Builder
+@Setter
+@NoArgsConstructor
 public class RegisterUserDto {
-    private String email;
-    private String password;
-    private String fullName;
-    private Role role;
-}
 
+    @NotBlank(message = "Full name is required")
+    private String fullName;
+
+    @Email(message = "Email must be valid")
+    @NotBlank(message = "Email is required")
+    private String email;
+
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    private String password;
+}

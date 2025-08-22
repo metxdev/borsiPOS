@@ -1,6 +1,6 @@
 package com.borsibaar.backend.dtos;
 
-import com.borsibaar.backend.entity.Role;
+import com.borsibaar.backend.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +12,16 @@ public class UserDto {
     private Integer id;
     private String fullName;
     private String email;
-    private Role role;
     private Date createdAt;
     private Date updatedAt;
+
+    public static UserDto from(User user) {
+        return UserDto.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
+    }
 }

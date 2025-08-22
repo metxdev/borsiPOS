@@ -1,14 +1,12 @@
 package com.borsibaar.backend.dtos;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ProductDTO {
     private Long id;
@@ -19,6 +17,9 @@ public class ProductDTO {
     private Long categoryId;
     private String categoryName;
     private LocalDateTime lastSaleAt;
+
     private BigDecimal priceChange;
-    private Boolean    priceUp;
+    private Boolean priceUp;
+    private BigDecimal predictedPrice;
+
 }

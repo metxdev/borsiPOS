@@ -2,58 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --c-bg-canvas:  #050505;  /* matches bg‑canvas */
-    --c-bg-card:    #121212;  /* matches bg‑card   */
-    --c-bg-row-alt: #1d1d1d;  /* matches bg‑row-alt*/
-
-    --c-text-base:  #f2f2f2;
-    --c-text-muted: #7e7e7e;
-
-    --c-accent:     #e5ff37;  /* accent‑lime */
-
-    --btn-bg:       #181818;
-    --btn-border-h: var(--c-accent);
-    
-  }
-
-
-  html,
-  body,
-  #root {
-    @apply m-0;
-  }
-
-  body {
-    background: var(--c-bg-canvas);
-    color: var(--c-text-base);
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@layer components {
-  a {
-    @apply text-accent-lime font-medium no-underline transition-colors;
-  }
-  a:hover {
-    @apply text-accent-lime/80;
-  }
-
-  button {
-    @apply px-4 py-2 rounded-lg border border-transparent
-           bg-[var(--btn-bg)] transition-colors;
-  }
-  button:hover {
-    border-color: var(--btn-border-h);
-  }
-}
-
-@layer utilities {
-  .bg-card    { background-color: var(--c-bg-card); }
-  .bg-row-alt { background-color: var(--c-bg-row-alt); }
-  .text-muted { color: var(--c-text-muted); }
+html, body, #root {
+  @apply bg-dark text-light font-sans h-full m-0 p-0;
 }

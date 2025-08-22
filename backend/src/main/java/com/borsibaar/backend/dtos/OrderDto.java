@@ -9,7 +9,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 public class OrderDto {
+    private Long id;
+    private String createdAt;
+    private double total;
     private List<OrderItemDto> items;
-
 }

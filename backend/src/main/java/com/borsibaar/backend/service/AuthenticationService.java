@@ -2,21 +2,20 @@ package com.borsibaar.backend.service;
 
 import com.borsibaar.backend.dtos.LoginUserDto;
 import com.borsibaar.backend.dtos.RegisterUserDto;
-import com.borsibaar.backend.entity.Role;
 import com.borsibaar.backend.entity.User;
 import com.borsibaar.backend.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import com.borsibaar.backend.exceptions.ResourceConflictException;
+import com.borsibaar.backend.exceptions.ResourceNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationService(
@@ -30,25 +29,32 @@ public class AuthenticationService {
     }
 
     public User signup(RegisterUserDto input) {
+        userRepository.findByEmail(input.getEmail()).ifPresent(u -> {
+            throw new ResourceConflictException("Email already in use");
+        });
+
         User user = User.builder()
                 .fullName(input.getFullName())
                 .email(input.getEmail())
                 .password(passwordEncoder.encode(input.getPassword()))
-                .role(input.getRole() == null ? Role.SALES : input.getRole())
                 .build();
 
         return userRepository.save(user);
     }
 
     public User authenticate(LoginUserDto input) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
-                        input.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            input.getEmail(),
+                            input.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            throw new BadCredentialsException("Invalid email or password");
+        }
 
         return userRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }
